@@ -1,13 +1,12 @@
 # low-level-development
-Theres are programming projects related to Linux kernel, operating system, computer architecture, processor designs and embedded system
+These are programming projects related to Linux kernel, operating system, computer architecture, processor design and embedded system
 
 [] Linux kernel 
 
-[] Operating Sysem 
+[] Operating System
 
 [] Computer Architecture
 
-[] Processor desgins
+[] Processor design
 
-[] embedded system 
-
+[] embedded system
