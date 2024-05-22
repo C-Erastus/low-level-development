@@ -113,9 +113,9 @@ Status my_string_extraction(MY_STRING hMy_string, FILE *fp)
 	while ((c = fgetc(fp)) != EOF){
 		if( c != ' '){
 			if(My_string->size == My_string->capacity-1){
-				My_string->data = (char *)realloc(My_string->data, sizeof(char) * My_string->size);
+				My_string->data = (char *)realloc(My_string->data, sizeof(char) * (My_string->size*2));
 				if(My_string->data == NULL ) {return FAILURE;}
-				My_string->capacity+= 2;
+				My_string->capacity = (My_string->size*2)+1;
 			}
 			My_string->data[i] = c; i++;
 			My_string->size++;
@@ -238,26 +238,26 @@ void my_string_assignment(Item *pLeft, Item Right)
 	struct my_string *pMy_left = (struct my_string *)*pLeft;
 	struct my_string *My_right = (struct my_string *)Right;
 
-	if(pMy_left == NULL){
+	if(pMy_left == NULL)
 		pMy_left = my_string_init_default(); 
 
-		if(pMy_left->capacity < My_right->capacity){
-			pMy_left->data = (char *)realloc(pMy_left->data, sizeof(char) * ((My_right->capacity - pMy_left->capacity)+3));
+	if(pMy_left->capacity < My_right->capacity){
+		pMy_left->data = (char *)realloc(pMy_left->data, My_right->capacity * sizeof(char));
 
-			pMy_left->capacity = My_right->capacity;
-			pMy_left->size = My_right->size;
-			for(int i = 0; i < pMy_left->size; i++)
-				pMy_left->data[i] = My_right->data[i];
-			pMy_left->data[pMy_left->size] = '\0';
+		pMy_left->capacity = My_right->capacity;
+		pMy_left->size = My_right->size;
+		for(int i = 0; i < pMy_left->size; i++)
+			pMy_left->data[i] = My_right->data[i];
+		//pMy_left->data[pMy_left->size] = '\0';
 
-			*pLeft = (Item)pMy_left;
-		}
-		else if (pMy_left->capacity >= My_right->capacity){
-			pMy_left->size = My_right->size; 
-			for(int i = 0; i < pMy_left->size; i++)
-				pMy_left[i] = My_right[i];
-			pMy_left->data[pMy_left->capacity-1] = '\0';
-		}
+		*pLeft = (Item)pMy_left;
+	} else if (pMy_left->capacity >= My_right->capacity){
+		pMy_left->size = My_right->size; 
+		for(int i = 0; i < pMy_left->size; i++)
+			pMy_left[i] = My_right[i];
+
+		*pLeft = (Item)pMy_left;
+		//pMy_left->data[pMy_left->capacity-1] = '\0';
 	}
 	/*else{
 		if(pMy_left->size < My_right->size){
@@ -282,6 +282,7 @@ void my_string_assignment(Item *pLeft, Item Right)
 	}*/
 
 }
+
 void my_string_destroy(Item* pItem)
 {
 	struct my_string *My_string = (struct my_string *)*pItem;
