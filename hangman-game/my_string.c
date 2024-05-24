@@ -111,7 +111,7 @@ Status my_string_extraction(MY_STRING hMy_string, FILE *fp)
 		{My_string->data[i] = c; i++; My_string->size++;}
 
 	while ((c = fgetc(fp)) != EOF){
-		if( c != ' '){
+		if( c != ' ' && c != '\n'){
 			if(My_string->size == My_string->capacity-1){
 				My_string->data = (char *)realloc(My_string->data, sizeof(char) * (My_string->size*2));
 				if(My_string->data == NULL ) {return FAILURE;}
@@ -241,7 +241,7 @@ void my_string_assignment(Item *pLeft, Item Right)
 	if(pMy_left == NULL)
 		pMy_left = my_string_init_default(); 
 
-	if(pMy_left->capacity < My_right->capacity){
+	if(pMy_left->capacity <= My_right->capacity){
 		pMy_left->data = (char *)realloc(pMy_left->data, My_right->capacity * sizeof(char));
 
 		pMy_left->capacity = My_right->capacity;
@@ -251,7 +251,7 @@ void my_string_assignment(Item *pLeft, Item Right)
 		//pMy_left->data[pMy_left->size] = '\0';
 
 		*pLeft = (Item)pMy_left;
-	} else if (pMy_left->capacity >= My_right->capacity){
+	} else if (pMy_left->capacity > My_right->capacity){
 		pMy_left->size = My_right->size; 
 		for(int i = 0; i < pMy_left->size; i++)
 			pMy_left[i] = My_right[i];

@@ -10,7 +10,9 @@ int main(int argc, char** argv)
 	MY_STRING hMy_string = my_string_init_default();
 	MY_STRING *hString; 
 	int i;
-	fp = fopen("simple.txt", "r");
+
+	fp = fopen("dictionary.txt", "r");
+	/*fp = fopen("simple.txt", "r");*/
 	if(fp == NULL){
 		printf("Failed to open the dictionary\n");
 	}
@@ -23,10 +25,19 @@ int main(int argc, char** argv)
 	}
 
 	while(my_string_extraction(hMy_string, fp)){
-		printf("%s\n", my_string_c_str(hMy_string));
-		i = my_string_get_size(hMy_string);
-		generic_vector_push_back(My_vector[i], hMy_string);
-		printf("one down\n");
+		/*my_string_insertion(hMy_string, stdout);
+		printf("\n");*/
+		if(my_string_get_size(hMy_string) < 30)
+			if(!generic_vector_push_back(My_vector[my_string_get_size(hMy_string)], (Item)hMy_string)){
+				printf("Failed to push string back\n"); 
+				my_string_insertion(hMy_string, fp);
+				exit(1);
+			}
+	
+	}
+
+	for(int i = 0; i < 30; i++){
+		printf("%d\n", generic_vector_get_size(My_vector[i]));
 	}
 
 	hString = generic_vector_at(My_vector[5], 1);
@@ -53,6 +64,8 @@ int main(int argc, char** argv)
 	fclose(fp);
 	for(i = 0; i < 30; i++)
 		generic_vector_destroy(&My_vector[i]);
+	
+	my_string_destroy(&hMy_string);
 
 	return 0;
 }

@@ -108,19 +108,15 @@ int generic_vector_get_capacity(GENERIC_VECTOR hVector)
 Status generic_vector_push_back(GENERIC_VECTOR hVector, Item hItem)
 
 {
-
 	Generic_vector* pVector = (Generic_vector*)hVector;
 
 	Item* pTemp;
 
 	int i;
 
-
-
 	if (pVector->size >= pVector->capacity)
 
 	{
-
 		pTemp = (Item*)malloc(sizeof(Item) * 2 * pVector->capacity);
 
 		if (pTemp == NULL)
@@ -141,7 +137,7 @@ Status generic_vector_push_back(GENERIC_VECTOR hVector, Item hItem)
 
 		pVector->capacity *= 2;
 
-		for (i=0; i < pVector->capacity; i++)
+		for (i=pVector->size; i < pVector->capacity; i++)
 		{
 
 			pTemp[i] = NULL;
@@ -155,9 +151,6 @@ Status generic_vector_push_back(GENERIC_VECTOR hVector, Item hItem)
 
 
 	}
-
-
-
 	pVector->fpAssignment(&(pVector->data[pVector->size]), hItem);
 
 	if (pVector->data[pVector->size] == NULL)
