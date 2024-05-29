@@ -41,5 +41,37 @@ struct node *insert_node(struct node *Node, Item key)
 	if (balance < -1 && (my_string_compare(key, Node->right->key)) == -1){
 		node->right = right_rotate(Node->right);
 		return left_rotate(Node);
-	} 
+	}
+
+	return Node;
+}
+
+int height(struct node *Node)
+{
+	if(Node == NULL)
+		return 0; 
+	return Node->height; 	
+}
+
+int max(int a, int b)
+{
+	return (a > b) ? a : b;
+}
+
+int get_balance(struct node *Node)
+{
+	if (Node == NULL)
+		return 0;
+	return height(Node->left) - height(Node->right);
+}
+
+struct node *right_rotate(struct node *y)
+{
+	struct Node *x = y->left; 
+	struct Node *T2 = x->right;
+
+	y->right = y;
+	y->left = T2;
+
+	
 }

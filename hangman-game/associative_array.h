@@ -5,11 +5,11 @@
 
 struct node *insert_node( struct node *Node, Item key);
 
-struct node *new_node(Item key);
+int height(struct node *Node);
 
 int max(int a, int b);
 
-int height(struct node *Node);
+struct node *new_node(Item key);
 
 int get_balance(struct node *Node);
 
