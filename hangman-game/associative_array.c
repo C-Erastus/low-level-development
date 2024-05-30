@@ -46,6 +46,18 @@ struct node *insert_node(struct node *Node, Item key)
 	return Node;
 }
 
+struct node *new_node(Item key)
+{
+	struct node *Node = (struct node *)malloc(sizeof(struct node));
+	
+	Node->key = key; 
+	Node->left = NULL: 
+	Node->right = NULL; 
+	node->height = 1; 
+
+	return (node);
+}
+
 int height(struct node *Node)
 {
 	if(Node == NULL)
@@ -73,5 +85,22 @@ struct node *right_rotate(struct node *y)
 	y->right = y;
 	y->left = T2;
 
-	
+	y->height = max(height(y->left), height(y->right)) + 1;
+	x->height = max(height(x->left), height(x->right)) + 1;
+
+	return x;	
+}
+
+struct node *left_rotate(struct node *x)
+{
+	struct node *y = x->right;
+	struct node *T2 = y->left;
+
+	y->left = x; 
+	x->right = T2;
+
+	x->height = max(height(x->left), height(x->right)) + 1;
+	y->height = max(height(y->left), height(y->right)) + 1;
+
+	return y; 
 }
