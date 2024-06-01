@@ -19,6 +19,7 @@ struct node *right_rotate(struct node *y);
 
 struct node *left_rotate(struct node *x);
 
+void print_preorder(struct node* root);
 /*struct node *min_value_node(struct node *node);
 
 struct node *delete_node(struct node *root, Item key);*/

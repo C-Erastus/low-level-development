@@ -7,6 +7,7 @@ struct node {
 	struct node *left;
 	struct node *right; 
 	int height; 
+	int key_count;
 };
 
 struct node *insert_node(struct node *Node, Item key)
@@ -20,8 +21,10 @@ struct node *insert_node(struct node *Node, Item key)
 		Node->left = insert_node(Node->left, key);
 	else if ((my_string_compare(key, Node->key) == 1))
 		Node->right = insert_node(Node->right, key);
-	else
+	else{
+		Node->key_count+=1;
 		return Node; 
+	}
 
 	/* Update the balnce factor */
 	Node->height = 1 + max(height(Node->left), height(Node->right));
@@ -54,6 +57,7 @@ struct node *new_node(Item key)
 	Node->left = NULL;
 	Node->right = NULL; 
 	Node->height = 1; 
+	Node->key_count = 1;
 
 	return (Node);
 }
@@ -103,4 +107,13 @@ struct node *left_rotate(struct node *x)
 	y->height = max(height(y->left), height(y->right)) + 1;
 
 	return y; 
+}
+
+void print_preorder(struct node *root)
+{
+	if(root != NULL){
+		printf("%s %d", my_string_c_str(root->key), root->key_count);
+		print_preorder(root->left);
+		print_preorder(root->right);
+	}
 }

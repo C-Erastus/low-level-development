@@ -126,6 +126,14 @@ Boolean my_string_empty(MY_STRING hMy_string);
 // object indicated by pLeft will be returned to the freestore.
 void my_string_assignment(Item *pLeft, Item Right);
 
+//Preconditon: current_word _family, new_key and word are all handles to vaild
+// MY_STRING opaque objects. guess is an alphabetical character that can be either
+// upper or lower case.
+// Postconditioin: Return SUCCESS after replacing the string in new_key with the key
+// 		value formed by consdiering the current word family, the word and the guress.
+//		Returns failure in the case of a resizing problem with the new_key string. 
+Status get_word_key_value(MY_STRING current_word_family, MY_STRING new_key, MY_STRING word, char guess);
+
 //Preconditioin: phMy_string holds the addre;ss of a valid handle to a MY_STRING
 // object
 // Postcondtion: The memory used for the MY_STRING object has been reclaimed by 

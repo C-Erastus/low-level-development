@@ -283,6 +283,22 @@ void my_string_assignment(Item *pLeft, Item Right)
 
 }
 
+Status get_word_key_value(MY_STRING current_word_family, MY_STRING new_key, MY_STRING word, char guess)
+{
+	struct my_string *_current_word_family = (struct my_string *)current_word_family; 
+	struct my_string *_new_key = (struct my_string *)new_key;
+	struct my_string *_word = (struct my_string *)word; 
+
+	my_string_assignment((MY_STRING)&_new_key, (MY_STRING)_current_word_family);
+
+	for(int i = 0; i < _word->size; i++){
+		if(_word->data[i] == guess)
+			_new_key->data[i] = guess; 
+	}
+	new_key = (MY_STRING)_new_key;
+	return SUCCESS;
+}
+
 void my_string_destroy(Item* pItem)
 {
 	struct my_string *My_string = (struct my_string *)*pItem;
