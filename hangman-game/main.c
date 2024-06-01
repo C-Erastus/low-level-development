@@ -7,12 +7,17 @@ int main(int argc, char** argv)
 {
 	FILE *fp;
 	GENERIC_VECTOR My_vector[30]; 
+	GENERIC_VECTOR game_vector;
 	MY_STRING hMy_string = my_string_init_default();
-	MY_STRING *hString; 
+	//MY_STRING *hString; 
+	MY_STRING Used_letters = my_string_init_default();
+	MY_STRING word = my_string_init_default();
 	int i;
 
+	int word_length = 0, number_of_guesses = 0;
+	char running_total;
+
 	fp = fopen("dictionary.txt", "r");
-	/*fp = fopen("simple.txt", "r");*/
 	if(fp == NULL){
 		printf("Failed to open the dictionary\n");
 	}
@@ -23,6 +28,10 @@ int main(int argc, char** argv)
 				my_string_destroy
 		);
 	}
+	game_vector = generic_vector_init_default(
+			my_string_assignment,
+			my_string_destroy
+		);
 
 	while(my_string_extraction(hMy_string, fp)){
 		/*my_string_insertion(hMy_string, stdout);
@@ -36,13 +45,39 @@ int main(int argc, char** argv)
 	
 	}
 
-	for(int i = 0; i < 30; i++){
-		printf("%d\n", generic_vector_get_size(My_vector[i]));
-	}
+	/********* THE GAME STARTS HERE **************/
+	do{
+		printf("What length word do you want to play with? ");
+		scanf("%d", &word_length);
+	}while(word_length < 1 || word_length > 30);
 
-	hString = generic_vector_at(My_vector[5], 1);
+	printf("How many guesses would you like to have? ");
+	scanf("%d", &number_of_guesses);
+
+	printf("Do you wish to have a running total of the number of words remaining in the world list? (y/n)" );
+	scanf("%c", running_total);
+
+	for(i = 0; i < number_of_guesses; i++)
+		my_string_push_back(word, '-');
+
+	game_vector = My_vector[word_length];
+	printf("\nYou have %d guesses left\n", number_of_guesses);
+	printf("Used letters: %s", my_string_c_str(Used_letters));
+	
+
+
+
+
+
+	/****************************************************************************
+
+	/*for(int i = 0; i < 30; i++){
+		printf("%d\n", generic_vector_get_size(My_vector[i]));
+	}*/
+
+	/*hString = generic_vector_at(My_vector[5], 1);
 	printf("The vector string: %s\n", my_string_c_str(*hString));
-	printf("after printing\n");
+	printf("after printing\n");*/
 
 	/*MY_STRING hMy_string[100] = {NULL};
 

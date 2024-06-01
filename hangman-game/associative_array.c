@@ -16,17 +16,17 @@ struct node *insert_node(struct node *Node, Item key)
 	if(Node == NULL)
 		return (new_node(key));
 
-	if(my_string_compare(key, node->key) == -1)
-		node->left = insert_node(node->left, key);
-	else if ((my_string_compare(key > node-Key)) == 1)
-		node->right = insert_node(node->right, key);
+	if((my_string_compare(key, Node->key) == -1))
+		Node->left = insert_node(Node->left, key);
+	else if ((my_string_compare(key, Node->key) == 1))
+		Node->right = insert_node(Node->right, key);
 	else
-		return node; 
+		return Node; 
 
 	/* Update the balnce factor */
-	Node->right = 1 + max(height(Node->left), height(Node->right));
+	Node->height = 1 + max(height(Node->left), height(Node->right));
 
-	balance = getBallance(Node);
+	balance = get_balance(Node);
 	if (balance > 1 && (my_string_compare(key, Node->left->key)) == -1)
 		return right_rotate(Node);
 
@@ -39,7 +39,7 @@ struct node *insert_node(struct node *Node, Item key)
 	}
 
 	if (balance < -1 && (my_string_compare(key, Node->right->key)) == -1){
-		node->right = right_rotate(Node->right);
+		Node->right = right_rotate(Node->right);
 		return left_rotate(Node);
 	}
 
@@ -51,11 +51,11 @@ struct node *new_node(Item key)
 	struct node *Node = (struct node *)malloc(sizeof(struct node));
 	
 	Node->key = key; 
-	Node->left = NULL: 
+	Node->left = NULL;
 	Node->right = NULL; 
-	node->height = 1; 
+	Node->height = 1; 
 
-	return (node);
+	return (Node);
 }
 
 int height(struct node *Node)
@@ -79,8 +79,8 @@ int get_balance(struct node *Node)
 
 struct node *right_rotate(struct node *y)
 {
-	struct Node *x = y->left; 
-	struct Node *T2 = x->right;
+	struct node *x = y->left; 
+	struct node *T2 = x->right;
 
 	y->right = y;
 	y->left = T2;
