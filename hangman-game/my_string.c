@@ -70,7 +70,11 @@ int my_string_compare(MY_STRING hLeft_string, MY_STRING hRight_string)
 {
 	struct my_string *Left_My_string = (struct my_string *)hLeft_string; 
 	struct my_string *Right_My_string = (struct my_string *)hRight_string; 
-	/*int big_string_size = 0;
+
+	//printf("COMPARING\n");
+
+	//printf("Left: %s: Right: %s\n", my_string_c_str((MY_STRING)Left_My_string), my_string_c_str((MY_STRING)Right_My_string));
+	int big_string_size = 0;
 	int Left_string_size = Left_My_string->size;
 	int Right_string_size = Right_My_string->size;
 
@@ -84,31 +88,38 @@ int my_string_compare(MY_STRING hLeft_string, MY_STRING hRight_string)
 	for(int i = 0; i < big_string_size; i++){
 		if (Left_My_string->data[i] < Right_My_string->data[i])
 			return -1;
-		else if (Left_My_string->data[i] > Right_My_string->data[i])
+		if (Left_My_string->data[i] > Right_My_string->data[i])
 			return 1;
-		else if (Left_My_string->data[i] == '\0')
+		/*else if (Left_My_string->data[i] == '\0')
 			return -1;
 		else if (Right_My_string->data[i] == '\0')
 			return 1;*/
-	/*}
-	return 0; */
+	}
 
-	int min_size = Left_My_string->size < Right_My_string->size ? Left_My_string->size : Right_My_string->size;
+	return 0;
 
+	/*int min_size = Left_My_string->size < Right_My_string->size ? Left_My_string->size : Right_My_string->size;
+	int i = 0
 	for (int i = 0; i < min_size; i++){
-		if(Left_My_string->data[i] < Right_My_string->data[i])
+		if(Left_My_string->data[i] < Right_My_string->data[i]){
 			return -1;
-		if(Left_My_string->data[i] > Right_My_string->data[i])
+		}
+		if(Left_My_string->data[i] > Right_My_string->data[i]){
 			return 1; 
+		}
 	}
 
 	// If the strings are identical up to the lenght of the shorter one, compare lengths
-	if (Left_My_string->size < Right_My_string->size )
-		return -1;
+	if (Left_My_string->size < Right_My_string->size ){
+		if(Left_My_string->data[i] < Right_My_string[i])
+			return -1;
+	}
 	if (Left_My_string->size > Right_My_string->size)
-		return 1;
+		if(Left_My_string->data[i] > Right_My_string->data[i])
+			return 1;
 
-	return 0; // the strings are the same
+
+	return 0;*/
 
 }
 

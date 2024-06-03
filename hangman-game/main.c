@@ -83,15 +83,24 @@ int main(int argc, char** argv)
 			get_word_key_value(word, new_key, *hString, guess);
 			//printf("%s: %s", my_string_c_str(*hString), my_string_c_str(new_key));
 
-			root = insert_node(root, new_key);
+			root = insert_node(root, new_key, *hString);
+			//printf("%s\n", my_string_c_str(new_key));
 		}
 		print_preorder(root);
 		printf("\n");
 
+		//game_vector = get_common_word_family(root);
+		root = get_common_word_family(root);
+
+		my_string_push_back(Used_letters, guess);
+
 		number_of_guesses--;
 
 	}while(number_of_guesses > 0);
-	
+
+	printf("\nI'm sorry, there were no %c's in the word\n", guess);
+	printf("The computer has %d possibilities remaining\n", root->key_count);
+	printf("The word I was thinking of was: %s\n", my_string_c_str(*generic_vector_at(root->ar_vector,0)));
 
 
 
