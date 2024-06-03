@@ -3,6 +3,15 @@
 
 #include "my_string.h"
 
+struct node {
+	Item key; 
+	struct node *left;
+	struct node *right; 
+	int height; 
+	int key_count;
+};
+
+
 struct node *insert_node( struct node *Node, Item key);
 
 struct node *new_node(Item key);

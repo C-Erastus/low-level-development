@@ -22,7 +22,7 @@ struct node *insert_node(struct node *Node, Item key)
 	else if ((my_string_compare(key, Node->key) == 1))
 		Node->right = insert_node(Node->right, key);
 	else{
-		Node->key_count+=1;
+		Node->key_count++;
 		return Node; 
 	}
 
@@ -112,8 +112,8 @@ struct node *left_rotate(struct node *x)
 void print_preorder(struct node *root)
 {
 	if(root != NULL){
-		printf("%s %d", my_string_c_str(root->key), root->key_count);
 		print_preorder(root->left);
 		print_preorder(root->right);
+		printf("%s %d\n", my_string_c_str(root->key), root->key_count);
 	}
 }

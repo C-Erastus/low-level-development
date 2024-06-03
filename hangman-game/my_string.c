@@ -70,7 +70,7 @@ int my_string_compare(MY_STRING hLeft_string, MY_STRING hRight_string)
 {
 	struct my_string *Left_My_string = (struct my_string *)hLeft_string; 
 	struct my_string *Right_My_string = (struct my_string *)hRight_string; 
-	int big_string_size = 0;
+	/*int big_string_size = 0;
 	int Left_string_size = Left_My_string->size;
 	int Right_string_size = Right_My_string->size;
 
@@ -86,24 +86,45 @@ int my_string_compare(MY_STRING hLeft_string, MY_STRING hRight_string)
 			return -1;
 		else if (Left_My_string->data[i] > Right_My_string->data[i])
 			return 1;
-		/*else if (Left_My_string->data[i] == '\0')
+		else if (Left_My_string->data[i] == '\0')
 			return -1;
 		else if (Right_My_string->data[i] == '\0')
 			return 1;*/
+	/*}
+	return 0; */
+
+	int min_size = Left_My_string->size < Right_My_string->size ? Left_My_string->size : Right_My_string->size;
+
+	for (int i = 0; i < min_size; i++){
+		if(Left_My_string->data[i] < Right_My_string->data[i])
+			return -1;
+		if(Left_My_string->data[i] > Right_My_string->data[i])
+			return 1; 
 	}
-	return 0; /* the strings are the same */ 
+
+	// If the strings are identical up to the lenght of the shorter one, compare lengths
+	if (Left_My_string->size < Right_My_string->size )
+		return -1;
+	if (Left_My_string->size > Right_My_string->size)
+		return 1;
+
+	return 0; // the strings are the same
+
 }
 
 Status my_string_extraction(MY_STRING hMy_string, FILE *fp)
 {
 	char c = 0; int i = 0;
 	struct my_string *My_string = (struct my_string *)hMy_string; 
+
+	if(My_string->size > 0){
+		for(i = 0; i < My_string->size; i++)
+			My_string->data[i] = '\0';
+	}
+
 	My_string->size = 0;
-
-	for(i = 0; i < My_string->size; i++)
-		My_string->data[i] = '\0';
-
 	i = 0;
+
 	while ((c = fgetc(fp)) == ' ');
 	if (c == EOF)
 		return FAILURE; 
@@ -122,7 +143,7 @@ Status my_string_extraction(MY_STRING hMy_string, FILE *fp)
 		}
 		else
 			{
-				My_string->data[My_string->size] = '\0';
+				My_string->data[My_string->size-1] = '\0';
 				ungetc(c, fp);
 				 return SUCCESS;
 			}
@@ -154,6 +175,7 @@ Status my_string_insertion(MY_STRING hMy_string, FILE *fp)
 
 Status my_string_push_back(MY_STRING hMy_string, char item)
 {
+	int i = 0;
 	struct my_string *My_string = (struct my_string *)hMy_string; 
 
 	if(My_string->size == My_string->capacity-1){
@@ -165,7 +187,7 @@ Status my_string_push_back(MY_STRING hMy_string, char item)
 		My_string->capacity*=2;
 	}
 
-	for (int i = 0; i < (My_string->capacity - 1); i++){
+	for (i = 0; i < (My_string->capacity - 1); i++){
 		if(My_string->data[i] == '\0'){
 			My_string->data[i] = item;
 			My_string->size++;

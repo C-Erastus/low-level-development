@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "my_string.h"
 #include "generic_vector.h"
+#include "associative_array.h"
 
 void clear_key_board_buffer();
 
@@ -16,6 +17,7 @@ int main(int argc, char** argv)
 	MY_STRING word = my_string_init_default();
 	MY_STRING new_key = my_string_init_default();
 	int i;
+	struct node *root = NULL; 
 
 	int word_length = 0, number_of_guesses = 0;
 	char running_total, guess;
@@ -31,10 +33,10 @@ int main(int argc, char** argv)
 				my_string_destroy
 		);
 	}
-	/*game_vector = generic_vector_init_default(
+	game_vector = generic_vector_init_default(
 			my_string_assignment,
 			my_string_destroy
-		);*/
+		);
 
 	while(my_string_extraction(hMy_string, fp)){
 		/*my_string_insertion(hMy_string, stdout);
@@ -66,27 +68,29 @@ int main(int argc, char** argv)
 		my_string_push_back(word, '-');
 	}
 
-	game_vector = My_vector[word_length];
+	game_vector = My_vector[word_length+2];
 	printf("\nYou have %d guesses left\n", number_of_guesses);
 	printf("Used letters: %s\n", my_string_c_str(Used_letters));
 	printf("word: %s\n", my_string_c_str(word));
 
-	/*do{
+	do{
 		printf("Enter guess: ");
 		scanf("%c",&guess);
 		clear_key_board_buffer();
 
-		for(i = generic_vector_get_size(game_vector); i > 0; i--){
-			printf("gvector\n");
+		for(i = generic_vector_get_size(game_vector)-1; i > 0; i--){
 			hString = generic_vector_at(game_vector, i);
 			get_word_key_value(word, new_key, *hString, guess);
-			printf("get key\n");
-			printf("%s: %s\n", my_string_c_str(generic_vector_at(game_vector, i)), my_string_c_str(new_key));
+			//printf("%s: %s", my_string_c_str(*hString), my_string_c_str(new_key));
 
+			root = insert_node(root, new_key);
 		}
+		print_preorder(root);
+		printf("\n");
 
+		number_of_guesses--;
 
-	}while(number_of_guesses > 0);*/
+	}while(number_of_guesses > 0);
 	
 
 
@@ -95,9 +99,9 @@ int main(int argc, char** argv)
 
 	/****************************************************************************/
 
-	for(int i = 0; i < 30; i++){
+	/*for(int i = 0; i < 30; i++){
 		printf("%d\n", generic_vector_get_size(My_vector[i]));
-	}
+	}*/
 
 	/*hString = generic_vector_at(My_vector[5], 1);
 	printf("The vector string: %s\n", my_string_c_str(*hString));
