@@ -13,7 +13,7 @@ int main(int argc, char** argv)
 	GENERIC_VECTOR My_vector[30]; 
 	GENERIC_VECTOR game_vector;
 	MY_STRING hMy_string = my_string_init_default();
-	MY_STRING *hString; 
+	MY_STRING *hString;
 	MY_STRING Used_letters = my_string_init_default();
 	MY_STRING word = my_string_init_default();
 	MY_STRING new_key = my_string_init_default();
@@ -98,7 +98,7 @@ int main(int argc, char** argv)
 			}
 			print_preorder(root);
 			printf("\n");
-
+			
 			//game_vector = get_common_word_family(root);
 			root = get_common_word_family(root);
 			game_vector = root->ar_vector; 
@@ -111,19 +111,20 @@ int main(int argc, char** argv)
 				if(guess == temp[i])
 					test = true; 
 			}
-			if(!test)
-				printf("\nI'm sorry, there were no %c's in the word\n", guess);
-			printf("The computer has %d possibilities remaining\n", root->key_count);
-			printf("Used Letters: %s\n", my_string_c_str(Used_letters));
 			number_of_guesses--;
+			if(!test)
+				printf("I'm sorry, there were no %c's in the word\n", guess);
+			printf("The computer has %d possibilities remaining\n\n", root->key_count);
+			printf("You have %d guesses left\n", number_of_guesses);
+			printf("Used Letters: %s\n", my_string_c_str(Used_letters));
+
+			my_string_assignment(&word, root->key);
 
 		}while(number_of_guesses > 0);
-
 		/*if(!test)
 			printf("\nI'm sorry, there were no %c's in the word\n", guess);
 		printf("The computer has %d possibilities remaining\n", root->key_count);*/
-		printf("The word I was thinking of was: %s\n", my_string_c_str(*generic_vector_at(game_vector,0)));
-
+		printf("The word I was thinking of was:%s\n", my_string_c_str(*generic_vector_at(game_vector,0)));
 		for(i = 0; i < my_string_get_size(Used_letters); i++)
 			my_string_pop_back(Used_letters);
 		for(i = 0; i < my_string_get_size(word); i++)
@@ -133,7 +134,7 @@ int main(int argc, char** argv)
 		scanf("%c", &replay);
 		clear_key_board_buffer();
 
-		printf("the answer: %c\n", replay);
+		//printf("the answer: %c\n", replay);
 	}while(replay == 'y');
 
 	/****************************************************************************/
@@ -170,7 +171,6 @@ int main(int argc, char** argv)
 	my_string_destroy(&word);
 	my_string_destroy(&Used_letters);
 	my_string_destroy(&hMy_string);
-	//my_string_destroy(&(*hString));
 	my_string_destroy(&new_key);
 
 	return 0;
