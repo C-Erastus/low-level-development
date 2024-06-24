@@ -62,7 +62,7 @@ int main(int argc, char** argv)
 
 		printf("How many guesses would you like to have? ");
 		scanf("%d", &number_of_guesses);
-		clear_key_board_buffer();
+		//clear_key_board_buffer();
 
 		/*printf("Do you wish to have a running total of the number of words remaining in the world list? (y/n): " );
 		scanf("%c", &running_total);
