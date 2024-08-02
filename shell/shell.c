@@ -6,6 +6,8 @@
 #include <string.h>
 /* ADD THE: -lreadline compiler flag when compiling */
 
+#define SIZE_T 64
+
 char *parse_command(char *command);
 int main(int argc, char** argv)
 {
@@ -24,7 +26,8 @@ int main(int argc, char** argv)
 		//printf("%s~$ ", _path);
 		if(strncmp(command, "", sysconf(_SC_ARG_MAX)) != 0){
 			command = parse_command(command);
-			printf("%s: Unrecognized Command\n", command);
+			if (strncmp(command, "exit", 64) !=0 || strncmp(command, "cd", 64) !=0 || strncmp(command, "exec", 64) !=0)
+				printf("%s: Unrecognized Command\n", command);
 			printf("%s~$ ", _path); 
 		}
 		else
@@ -41,7 +44,19 @@ char *parse_command(char *command)
  		if(!isspace(command[i]))
  			cmd[i] = command[i];
  		else
- 			break;
+ 			if (strncmp(cmd, "eixt", SIZE_T) == 0)
+ 				//do things for exit
+ 			else if (strncmp(cmd, "cd", SIZE_T) == 0)
+ 				// do things for cd 
+ 			else if (strncmp(cmd, "exec", SIZE_t) == 0)
+ 				// do things for exec
+ 			else
+ 				// do nothing
  	}
+
+ 	/* Add support for EXIT:
+ 	 * Add support for CD,
+ 	 * Add support  for exec
+ 	 */
  	return cmd; 
 }
