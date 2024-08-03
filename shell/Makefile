@@ -7,4 +7,4 @@ shell: $(OBJS)
 shell.o: shell.c
 	$(CC) $(CFLAGS) -c shell.c -o shell.o 
 clean: 
-	rm *.o
+	rm *.o shell
