@@ -14,10 +14,11 @@
 
 int main(int argc, char** argv)
 {
-	char *buf, cmd[SIZE_T];
+	char *buf, cmd[SIZE_T], *temp;
 	long size;
 	char *_path, *command;
 	int index;
+
 
 	size = pathconf(".", _PC_PATH_MAX);
 	command = (char*)malloc(sizeof(char)*sysconf(_SC_ARG_MAX));
@@ -33,11 +34,14 @@ int main(int argc, char** argv)
 
 			printf("The returned command: %s\n", cmd);
 
-			if (strncmp(cmd, "exit", 64) !=0)
+			if (strncmp(cmd, "exit", 64) == 0)
 				execute_exit(command, &index);
-			else if (strncmp(cmd, "cd", 64) !=0)
-				strncpy(_path, execute_cd(command, &index), SIZE_T);
-			else if (strncmp(cmd, "exec", 64) !=0)
+			else if (strncmp(cmd, "cd", 64) == 0){
+				temp = execute_cd(command, &index);
+				strncpy(_path, temp, SIZE_T);
+				free(temp);
+				printf("Done freeing up\n");
+			}else if (strncmp(cmd, "exec", 64))
 				execute_exec(command, &index);
 			else
 				printf("%s: Unrecognized Command\n", cmd);
