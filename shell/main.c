@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 		if(strncmp(command, "", sysconf(_SC_ARG_MAX)) != 0){
 			strncpy(cmd, parse_command(command, &index), SIZE_T);
 
-			printf("The returned command: %s\n", cmd);
+			//printf("The returned command: %s\n", cmd);
 
 			if (strncmp(cmd, "exit", 64) == 0)
 				execute_exit(command, &index);
@@ -40,15 +40,17 @@ int main(int argc, char** argv)
 				temp = execute_cd(command, &index);
 				strncpy(_path, temp, SIZE_T);
 				free(temp);
-				printf("Done freeing up\n");
-			}else if (strncmp(cmd, "exec", 64))
+				//printf("Done freeing up\n");
+			}else if (strncmp(cmd, "exec", 64) == 0)
 				execute_exec(command, &index);
 			else
 				printf("%s: Unrecognized Command\n", cmd);
 			printf("%s~$ ", _path); 
 		}
-		else
+		else{
 			printf("%s~$ ", _path);
+			free(command);
+		}
 	}
 
 	return 0;
