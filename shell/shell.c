@@ -66,7 +66,9 @@ char *execute_cd(char *command, int *index)
 
 void execute_exec(char *command, int *index)
 {
+	char **_argv;
 	printf("do something for exec\n");
+	_argv = (char**)malloc(sizeof(char**)*PATH_MAX);
 	int space_count = 0; 
 
 	for (int i = (*index)+1; command[i] != '\0'; i++){
@@ -74,6 +76,22 @@ void execute_exec(char *command, int *index)
 			space_count++;
 	}
 	printf("space count: %d\n", space_count);
+	*index++;
+	new_command = command[index];
+	fgets(path, new_command); // test by printing the path
+
+	for(int i = 0; i < PATH_MAX; i++){
+		_argv[i] = (char*)malloc(sizeof(char*)PATH_MAX);
+		fgets(_argv[i], new_command);
+	}
+	/* Use this version */
+	while(fgets(_argv[i]), new_command){
+		;
+	}
+
+	if(execv(path, _argv) == -1){
+		perror("execv failed");
+	}
 
 	return;
 
