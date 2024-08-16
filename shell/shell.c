@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include "shell.h"
 #include <unistd.h>
+#include <string.h>
 
 char *parse_command(char *command, int *index)
 {
@@ -66,33 +67,39 @@ char *execute_cd(char *command, int *index)
 
 void execute_exec(char *command, int *index)
 {
-	char **_argv;
+	char **args, *path, *token, *new_command;
+	int i = 0;
+
 	printf("do something for exec\n");
-	_argv = (char**)malloc(sizeof(char**)*PATH_MAX);
-	int space_count = 0; 
 
-	for (int i = (*index)+1; command[i] != '\0'; i++){
-		if(command[i] == ' ')
-			space_count++;
+	path = (char*)malloc(sizeof(char)*PATH_MAX);
+	if(path == NULL){
+		printf("Failed to allocat space for path\n"); 
+		exit(1);
 	}
-	printf("space count: %d\n", space_count);
-	*index++;
-	new_command = command[index];
-	fgets(path, new_command); // test by printing the path
-
-	for(int i = 0; i < PATH_MAX; i++){
-		_argv[i] = (char*)malloc(sizeof(char*)PATH_MAX);
-		fgets(_argv[i], new_command);
-	}
-	/* Use this version */
-	while(fgets(_argv[i]), new_command){
-		;
+	args = (char**)malloc(sizeof(char**)*PATH_MAX);
+	if(args == NULL){
+		printf("Failed to allocate space for path\n");
+		exit(1);
 	}
 
-	if(execv(path, _argv) == -1){
+	new_command = &command[*index]+1;
+	token = strtok(new_command, " ");
+	strncpy(path, token, PATH_MAX); 
+	//printf("%s\n", path);
+	while((token = strtok(NULL, " ")) != NULL){
+		//token = strtok(NULL, " "); 
+		args[i] = (char*)malloc(sizeof(char)*PATH_MAX);
+		if(args[i] == NULL){
+			printf("Failed to allocate sapce for arg[%d]\n", i);
+			exit(1);
+		}
+		strncpy(args[i], token, PATH_MAX);
+		i++; 
+	}
+	printf("end of while loop\n");
+	if(execv(path, args) == -1){
 		perror("execv failed");
 	}
-
-	return;
 
 }
