@@ -83,7 +83,7 @@ void execute_exec(char *command, int *index)
 		exit(1);
 	}
 
-	new_command = &command[*index]+1;
+	new_command = &command[*index];
 	token = strtok(new_command, " ");
 	strncpy(path, token, PATH_MAX); 
 	//printf("%s\n", path);
@@ -100,6 +100,8 @@ void execute_exec(char *command, int *index)
 	printf("end of while loop\n");
 	if(execv(path, args) == -1){
 		perror("execv failed");
+		printf("The path in exec: %s\n", path);
+		fprintf(stderr, "Error number: %d\n", errno);
 	}
 
 }

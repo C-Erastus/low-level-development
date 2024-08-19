@@ -6,6 +6,7 @@
 #include <string.h>
 #include <errno.h>
 #include <limits.h>
+#include <sys/wait.h>
 
 #include "shell.h"
 /* ADD THE: -lreadline compiler flag when compiling */
@@ -17,7 +18,7 @@ int main(int argc, char** argv)
 	char *buf, cmd[SIZE_T], *temp;
 	long size;
 	char *_path, *command;
-	int index;
+	int index, pid, status;
 
 
 	size = pathconf(".", _PC_PATH_MAX);
@@ -34,7 +35,18 @@ int main(int argc, char** argv)
 
 			//printf("The returned command: %s\n", cmd);
 
-			if (strncmp(cmd, "exit", 64) == 0)
+			if(cmd[0] == '.' || cmd[0] == '/'){
+				index = 0; 
+				pid = fork();
+				if(pid == 0){
+					/* child world */
+					execute_exec(command, &index); 
+				}else{
+					/* Parent world*/
+					waitpid(pid, &status, 0);
+				}
+			}
+			else if (strncmp(cmd, "exit", 64) == 0)
 				execute_exit(command, &index);
 			else if (strncmp(cmd, "cd", 64) == 0){
 				temp = execute_cd(command, &index);
