@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 	long size;
 	char *_path, *command;
 	int index, pid, status;
-
+	char *env;
 
 	size = pathconf(".", _PC_PATH_MAX);
 	command = (char*)malloc(sizeof(char)*sysconf(_SC_ARG_MAX));
@@ -55,8 +55,12 @@ int main(int argc, char** argv)
 				//printf("Done freeing up\n");
 			}else if (strncmp(cmd, "exec", 64) == 0)
 				execute_exec(command, &index);
-			else
+			else{
+				check_path(getenv("PATH"), cmd)
+
+				printf("The env: %s\n", env);
 				printf("%s: Unrecognized Command\n", cmd);
+			}
 			printf("%s~$ ", _path); 
 		}
 		else{
@@ -67,3 +71,4 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+/* https://kdlp.underground.software/course/spring2023/assignments/A1.html*/

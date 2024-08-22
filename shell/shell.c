@@ -105,3 +105,21 @@ void execute_exec(char *command, int *index)
 	}
 
 }
+
+bool check_path(char *path, char *cmd)
+{
+	for(int i = 0, j = 0; path[i] != '\0'; i++, j++){
+		if(path[i] != ':')
+			dir[j] = path[i];
+		else{ /* we have a full path*/
+			file = fopen(dir, 'r');
+			if(fgets(buf, sizeof(buf), file) != NULL){
+				if(strncmp(buf, command, PATH_MAX) == 0)
+					return true; /* we found the file*/
+			}
+		}
+		j = 0;
+		/* set dir = {\0};
+	}
+	return false; 
+}

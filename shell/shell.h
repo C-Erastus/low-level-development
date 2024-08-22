@@ -13,4 +13,6 @@ char *execute_cd(char *command, int *index);
 // Executes the exce shell command
 void execute_exec(char *command, int *index); 
 
+bool check_path(char *path, char *cmd); 
+
 #endif 
