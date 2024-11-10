@@ -1,6 +1,8 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#include <stdbool.h>
+
 // Parse a given command 
 char *parse_command(char *command, int *index);
 

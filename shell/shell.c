@@ -106,20 +106,22 @@ void execute_exec(char *command, int *index)
 
 }
 
+/* what is this function doing? *?
 bool check_path(char *path, char *cmd)
 {
+	char dir[1000000],;
 	for(int i = 0, j = 0; path[i] != '\0'; i++, j++){
 		if(path[i] != ':')
 			dir[j] = path[i];
-		else{ /* we have a full path*/
-			file = fopen(dir, 'r');
+		else{ 
+			file = fopen(dir, "r");
 			if(fgets(buf, sizeof(buf), file) != NULL){
 				if(strncmp(buf, command, PATH_MAX) == 0)
-					return true; /* we found the file*/
+					return true; 
 			}
 		}
 		j = 0;
 		/* set dir = {\0};
 	}
 	return false; 
-}
+}*/

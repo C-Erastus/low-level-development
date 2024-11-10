@@ -56,7 +56,7 @@ int main(int argc, char** argv)
 			}else if (strncmp(cmd, "exec", 64) == 0)
 				execute_exec(command, &index);
 			else{
-				check_path(getenv("PATH"), cmd)
+				/*check_path(getenv("PATH"), cmd);*/
 
 				printf("The env: %s\n", env);
 				printf("%s: Unrecognized Command\n", cmd);
