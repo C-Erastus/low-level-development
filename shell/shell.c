@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 
+/*Function "parse_command": parse the input command */
 char *parse_command(char *command, int *index)
 {
 	//printf("parse command\n");
@@ -26,12 +27,13 @@ char *parse_command(char *command, int *index)
 
  	return cmd;
 }
-
+/* Function "execute_exit": exits the shell  */
 void execute_exit(char *command, int *index)
 {
-	//printf("Doing exit command\n");
+	printf("Doing exit command\n");
 	if(command[*index+1] != '\0')
 		printf("exit has no argument\n");
+	exit(1);
 }
 
 char *execute_cd(char *command, int *index)
@@ -121,7 +123,7 @@ bool check_path(char *path, char *cmd)
 			}
 		}
 		j = 0;
-		/* set dir = {\0};
+		set dir = {\0};
 	}
 	return false; 
 }*/

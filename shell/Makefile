@@ -1,5 +1,5 @@
 CC = gcc 
-CFLAGS = -Wall -g -lreadline
+CFLAGS = -Wall -g
 OBJS = main.o shell.o
 
 shell: $(OBJS)
