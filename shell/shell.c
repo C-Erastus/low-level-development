@@ -27,6 +27,7 @@ char *parse_command(char *command, int *index)
 
  	return cmd;
 }
+
 /* Function "execute_exit": exits the shell  */
 void execute_exit(char *command, int *index)
 {
@@ -36,6 +37,7 @@ void execute_exit(char *command, int *index)
 	exit(1);
 }
 
+/* Function "execute_exit": executs the 'cd' command */
 char *execute_cd(char *command, int *index)
 {
 	//printf("doing something with cd\n");

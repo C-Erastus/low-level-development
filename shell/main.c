@@ -25,6 +25,7 @@ int main(int argc, char** argv)
 	command = (char*)malloc(sizeof(char)*sysconf(_SC_ARG_MAX));
 	buf = (char*)malloc((size_t)size);
 	_path = getcwd(buf, (size_t)size);
+	ssize_t bytes_read;
 
 	printf("%s~$ ", _path);
 
@@ -33,7 +34,6 @@ int main(int argc, char** argv)
 		if(strncmp(command, "\n", sysconf(_SC_ARG_MAX)) != 0){
 			strncpy(cmd, parse_command(command, &index), SIZE_T);
 
-			//printf("The returned command: %s\n", cmd);
 
 			if(cmd[0] == '.' || cmd[0] == '/'){
 				index = 0; 
@@ -45,23 +45,23 @@ int main(int argc, char** argv)
 					/* Parent world*/
 					waitpid(pid, &status, 0);
 				}
-			}
-			else if (strncmp(cmd, "exit", SIZE_T) == 0)
+			}else if (strncmp(cmd, "exit", SIZE_T) == 0)
 				execute_exit(command, &index); /*executes the "exit" command */
 			else if (strncmp(cmd, "cd", SIZE_T) == 0){
+				printf("this is the cd command\n");
 				temp = execute_cd(command, &index);
 				strncpy(_path, temp, SIZE_T);
 				free(temp);
-				//printf("Done freeing up\n");
-			}else if (strncmp(cmd, "exec", SIZE_T) == 0)
+				printf("Done freeing up\n");
+			}else if (strcmp(cmd, "exec", SIZE_T) == 0)
 				execute_exec(command, &index);
 			else{
 				/*check_path(getenv("PATH"), cmd);*/
 
-				printf("The env: %s\n", env);
+				/*printf("The env: %s\n", env);*/
 				printf("%s: Unrecognized Command\n", cmd);
 			}
-			printf("%s~$ ", _path); 
+			/*printf("%s~$ ", _path); */
 		} else{
 			printf("%s~$ ", _path);
 			/*free(command);*/
